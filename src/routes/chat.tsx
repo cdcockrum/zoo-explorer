@@ -77,6 +77,23 @@ function ChatPage() {
     inputRef.current?.focus();
   }, [status]);
 
+  // Auto-send a question from ?q= (e.g. linked from the map).
+  const autoSentRef = useRef(false);
+  useEffect(() => {
+    if (autoSentRef.current) return;
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
+    if (!q) return;
+    autoSentRef.current = true;
+    // Clear the param so a refresh doesn't re-send.
+    const url = new URL(window.location.href);
+    url.searchParams.delete("q");
+    window.history.replaceState({}, "", url.toString());
+    void sendMessage({ text: q });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const isBusy = status === "submitted" || status === "streaming";
 
   const send = async (text: string) => {
