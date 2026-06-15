@@ -12,9 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToursRouteImport } from './routes/tours'
 import { Route as ScavengerHuntRouteImport } from './routes/scavenger-hunt'
 import { Route as MapRouteImport } from './routes/map'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ConservationRouteImport } from './routes/conservation'
 import { Route as ChatRouteImport } from './routes/chat'
+import { Route as AnimalsRouteImport } from './routes/animals'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AnimalsIdRouteImport } from './routes/animals.$id'
 
 const ToursRoute = ToursRouteImport.update({
   id: '/tours',
@@ -31,9 +36,29 @@ const MapRoute = MapRouteImport.update({
   path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConservationRoute = ConservationRouteImport.update({
+  id: '/conservation',
+  path: '/conservation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChatRoute = ChatRouteImport.update({
   id: '/chat',
   path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnimalsRoute = AnimalsRouteImport.update({
+  id: '/animals',
+  path: '/animals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -46,50 +71,101 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnimalsIdRoute = AnimalsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AnimalsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/animals': typeof AnimalsRouteWithChildren
   '/chat': typeof ChatRoute
+  '/conservation': typeof ConservationRoute
+  '/dashboard': typeof DashboardRoute
   '/map': typeof MapRoute
   '/scavenger-hunt': typeof ScavengerHuntRoute
   '/tours': typeof ToursRoute
+  '/animals/$id': typeof AnimalsIdRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/animals': typeof AnimalsRouteWithChildren
   '/chat': typeof ChatRoute
+  '/conservation': typeof ConservationRoute
+  '/dashboard': typeof DashboardRoute
   '/map': typeof MapRoute
   '/scavenger-hunt': typeof ScavengerHuntRoute
   '/tours': typeof ToursRoute
+  '/animals/$id': typeof AnimalsIdRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/animals': typeof AnimalsRouteWithChildren
   '/chat': typeof ChatRoute
+  '/conservation': typeof ConservationRoute
+  '/dashboard': typeof DashboardRoute
   '/map': typeof MapRoute
   '/scavenger-hunt': typeof ScavengerHuntRoute
   '/tours': typeof ToursRoute
+  '/animals/$id': typeof AnimalsIdRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/map' | '/scavenger-hunt' | '/tours' | '/api/chat'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/map' | '/scavenger-hunt' | '/tours' | '/api/chat'
-  id:
-    | '__root__'
+  fullPaths:
     | '/'
+    | '/about'
+    | '/animals'
     | '/chat'
+    | '/conservation'
+    | '/dashboard'
     | '/map'
     | '/scavenger-hunt'
     | '/tours'
+    | '/animals/$id'
+    | '/api/chat'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/about'
+    | '/animals'
+    | '/chat'
+    | '/conservation'
+    | '/dashboard'
+    | '/map'
+    | '/scavenger-hunt'
+    | '/tours'
+    | '/animals/$id'
+    | '/api/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/animals'
+    | '/chat'
+    | '/conservation'
+    | '/dashboard'
+    | '/map'
+    | '/scavenger-hunt'
+    | '/tours'
+    | '/animals/$id'
     | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  AnimalsRoute: typeof AnimalsRouteWithChildren
   ChatRoute: typeof ChatRoute
+  ConservationRoute: typeof ConservationRoute
+  DashboardRoute: typeof DashboardRoute
   MapRoute: typeof MapRoute
   ScavengerHuntRoute: typeof ScavengerHuntRoute
   ToursRoute: typeof ToursRoute
@@ -119,11 +195,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conservation': {
+      id: '/conservation'
+      path: '/conservation'
+      fullPath: '/conservation'
+      preLoaderRoute: typeof ConservationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chat': {
       id: '/chat'
       path: '/chat'
       fullPath: '/chat'
       preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/animals': {
+      id: '/animals'
+      path: '/animals'
+      fullPath: '/animals'
+      preLoaderRoute: typeof AnimalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -140,12 +244,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/animals/$id': {
+      id: '/animals/$id'
+      path: '/$id'
+      fullPath: '/animals/$id'
+      preLoaderRoute: typeof AnimalsIdRouteImport
+      parentRoute: typeof AnimalsRoute
+    }
   }
 }
 
+interface AnimalsRouteChildren {
+  AnimalsIdRoute: typeof AnimalsIdRoute
+}
+
+const AnimalsRouteChildren: AnimalsRouteChildren = {
+  AnimalsIdRoute: AnimalsIdRoute,
+}
+
+const AnimalsRouteWithChildren =
+  AnimalsRoute._addFileChildren(AnimalsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  AnimalsRoute: AnimalsRouteWithChildren,
   ChatRoute: ChatRoute,
+  ConservationRoute: ConservationRoute,
+  DashboardRoute: DashboardRoute,
   MapRoute: MapRoute,
   ScavengerHuntRoute: ScavengerHuntRoute,
   ToursRoute: ToursRoute,
@@ -154,13 +280,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

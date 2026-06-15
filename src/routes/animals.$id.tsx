@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SiteNav } from "@/components/SiteNav";
-import { ANIMALS, EXHIBITS, STATUS_COLORS } from "@/lib/zoo-data";
+import { ANIMALS, EXHIBITS, STATUS_COLORS, type Animal } from "@/lib/zoo-data";
 import { ArrowLeft, MapPin, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/animals/$id")({
@@ -48,11 +48,11 @@ export const Route = createFileRoute("/animals/$id")({
 });
 
 function AnimalDetail() {
-  const { animal } = Route.useLoaderData();
+  const { animal } = Route.useLoaderData() as { animal: Animal };
   const exhibit = EXHIBITS.find((e) => e.id === animal.exhibitId);
   const related = animal.related
-    .map((id) => ANIMALS.find((a) => a.id === id))
-    .filter((a): a is NonNullable<typeof a> => Boolean(a));
+    .map((id: string) => ANIMALS.find((a) => a.id === id))
+    .filter((a): a is Animal => Boolean(a));
 
   const facts: { label: string; value: string }[] = [
     { label: "Classification", value: animal.classification },
